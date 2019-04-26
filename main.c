@@ -10,9 +10,7 @@ int main(void){
     int i = 0, e = 0, count = 0, j = 0;
     char array[1024] = {0};
     int encrypted[1024] = {0}; // array used to store encrypted message
-    int key[26] = {0}; //key  
-    int k = 0, arr = 0, alph = 0, location = 0;
-    int AlphFreq[] = {69, 84, 65, 79, 73, 78, 83, 72, 82, 68, 76, 85, 67, 77, 87, 70, 71, 89, 80, 66, 86, 75, 74, 88, 81, 90}; //array with descending order of charcter frequency in Ennglish alphabet
+    int k = 0, location = 0;
     char original[1024] = {0}; // array used to store original input characters after ithey have been read by while loop below
     int userKey[26]; //user key for encryption 
     
@@ -111,13 +109,22 @@ int main(void){
 
  /*-----Creation of key for each alphabet by comparing frequency of input text character occurrence with frequency of character occurrence in the english language------------------*/
     srand(time(0)); 
+    fprintf(output, "%s %s", "Key", "is:");
     for(i=0; i<= 25; i++){ 
         userKey[i] = rand() % 27;
-
+        k = userKey[i];
+        encrypted[i] = eLibU[i] + k;
+        e = encrypted[i];
+        if(e > 90){     //if ascii value Z is exceeded...
+            e = e - 25;    //starts array value from A     
+        }
+        fprintf(output, " %c", e); //prints key value to output
     }
+    fprintf(output, "\n"); // creates space between key value and encrypted message text in output file
  /*------------------------------------------------------------------------*/
   
-/*--------------Decryption/Encryption of input Based on statistical analysis------------------*/
+/*--------------Encryption of input based on randomly generated key (i.e. userKey)------------------*/
+
     for(i=0; i<strlen(original); i++){
             
             location = original[i] - 65;
